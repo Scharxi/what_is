@@ -2,17 +2,24 @@
 mod api;
 use api::*;
 mod cli;
-use cli::*;
+use cli::{*, parser::CLI};
 
 #[tokio::main]
 async fn main() -> reqwest::Result<()> {
-    match make_request("hello".to_owned()).await {
+    /*match make_request("hello".to_owned()).await {
         Ok(def) => {
             let def = def.to_word_defenition().await; 
             println!("{:#?}", def)
         }, 
         Err(e) => return Err(e)
-    }; 
+    }; */
+
+    let cli = CLI::init(); 
+    /*if let Some(meaning) = cli.get_one::<bool>("meaning") {
+        println!("{}", meaning);
+    }*/
+
+    handle(&cli).await;
 
     Ok(())
 }

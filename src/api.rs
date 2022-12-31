@@ -21,26 +21,17 @@ impl WordLookUp for Response {
 #[derive(Debug, Clone, Deserialize)]
 pub struct Definition {
     definition: String, 
+    #[serde(skip_serializing)]
     example: Option<String>, 
+    #[serde(skip_serializing)]
     synonyms: Vec<String>, 
+    #[serde(skip_serializing)]
     antonyms: Vec<String>
 }
 
 impl Definition {
     pub fn definition(&self) -> &str {
         self.definition.as_ref()
-    }
-
-    pub fn example(&self) -> Option<String> {
-        self.example.clone()
-    }
-
-    pub fn synonyms(&self) -> Vec<String> {
-        self.synonyms.clone()
-    }
-
-    pub fn antonyms(&self) -> Vec<String> {
-        self.antonyms.clone()
     }
 }
 
@@ -81,8 +72,11 @@ impl Phonectic {
 #[derive(Debug, Clone, Deserialize)]
 pub struct WordDefenition {
     word: String, 
+    #[serde(skip_serializing)]
     phonetic: Option<String>, 
-    phonetics: Vec<Phonectic>, 
+    #[serde(skip_serializing)]
+    phonetics: Vec<Phonectic>,
+    #[serde(skip_serializing)] 
     origin: Option<String>, 
     meanings: Vec<Meaning>
 }
@@ -90,18 +84,6 @@ pub struct WordDefenition {
 impl WordDefenition {
     pub fn get_word(&self) -> String {
         self.word.clone().clone()
-    }
-
-    pub fn get_phonetic(&self) -> Option<String> {
-        self.phonetic.clone()
-    }
-
-    pub fn get_phonetics(&self) -> Vec<Phonectic> {
-        self.phonetics.clone()
-    }
-
-    pub fn get_origin(&self) -> Option<String> {
-        self.origin.clone()
     }
 
     pub fn get_meanings(&self) -> Vec<Meaning> {

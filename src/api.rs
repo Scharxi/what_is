@@ -1,4 +1,4 @@
-use reqwest::{Response};
+use reqwest::Response;
 use serde::Deserialize;
 
 pub async fn make_request(word: String) -> std::result::Result<Response, reqwest::Error> {
@@ -8,13 +8,13 @@ pub async fn make_request(word: String) -> std::result::Result<Response, reqwest
 
 #[async_trait::async_trait]
 pub trait WordLookUp {
-    async fn to_word_defenition(self) -> Vec<WordDefenition>;
+    async fn to_word_defenition(self) ->  Result<Vec<WordDefenition>, reqwest::Error>;
 }
 
 #[async_trait::async_trait]
 impl WordLookUp for Response {
-    async fn to_word_defenition(self) ->  Vec<WordDefenition> {
-        self.json::<Vec<WordDefenition>>().await.unwrap()
+    async fn to_word_defenition(self) -> Result<Vec<WordDefenition>, reqwest::Error>{
+        self.json::<Vec<WordDefenition>>().await
     }
 }
 

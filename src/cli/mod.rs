@@ -1,5 +1,5 @@
 use clap::ArgMatches;
-use owo_colors::{OwoColorize, colors::css::SeaGreen};
+use owo_colors::{OwoColorize, colors::{css::SeaGreen, Red}};
 
 use crate::api::{self, WordLookUp};
 
@@ -11,12 +11,23 @@ pub async fn handle(matches: &ArgMatches) {
     // make request to api
     let response = api::make_request(query.to_owned()).await;
 
+
     match response {
         Ok(res) => {
+            if res.status().is_client_error() {
+                eprintln!("{}: The word '{}' you're looking for does not exist.", "ERROR".red().bold(), query.green());
+                return;
+            }
+
             // convert response to obejct
             let word = res.to_word_defenition().await;
 
-            if let Some(word) = word.first().cloned() {
+            if word.is_err() {
+                eprintln!("{}: Something went wrong while parsing response to object. \n\t {:?}", "ERROR".fg::<Red>().bold(), word.err().unwrap());
+                return;
+            }
+
+            if let Some(word) = word.unwrap().first().cloned() {
                 let meanings = word.get_meanings();
                 let definition: String = meanings
                     .iter()
@@ -32,6 +43,6 @@ pub async fn handle(matches: &ArgMatches) {
                 println!("{}", definition);
             }
         }
-        Err(e) => {}
+        Err(e) => eprintln!("{}: Could not send request.\n\t {:?}", "ERROR".fg::<Red>().bold(), e)
     }
 }

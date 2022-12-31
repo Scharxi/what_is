@@ -7,7 +7,6 @@ use cli::{*, parser::CLI};
 #[tokio::main]
 async fn main() -> reqwest::Result<()> {
     let cli = CLI::init(); 
-
     handle(&cli).await;
 
     Ok(())
@@ -29,6 +28,5 @@ async fn test_make_request() {
 async fn test_turn_response_to_word_def() {
     let res = make_request("hello".to_owned()).await;
     let words = res.unwrap().to_word_defenition().await; 
-    dbg!(words.clone());
-    assert_eq!(words.first().unwrap().get_word(), "hello".to_owned())
+    assert_eq!(words.unwrap().first().unwrap().get_word(), "hello".to_owned())
 }

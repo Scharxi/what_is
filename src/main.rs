@@ -6,8 +6,8 @@ use cli::{*, parser::CLI};
 
 #[tokio::main]
 async fn main() -> reqwest::Result<()> {
-    let cli = CLI::init(); 
-    handle(&cli).await;
+    let input = CLI::get_input(); 
+    handle(input).await;
 
     Ok(())
 }

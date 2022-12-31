@@ -1,13 +1,10 @@
-use clap::ArgMatches;
 use owo_colors::{OwoColorize, colors::{css::SeaGreen, Red}};
 
 use crate::api::{self, WordLookUp};
 
 pub mod parser;
 
-pub async fn handle(matches: &ArgMatches) {
-    let query = matches.get_one::<String>("word").unwrap();
-
+pub async fn handle(query: String) {
     // make request to api
     let response = api::make_request(query.to_owned()).await;
 

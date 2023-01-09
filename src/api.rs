@@ -1,7 +1,7 @@
 use reqwest::Response;
 use serde::Deserialize;
 
-pub async fn make_request(word: String) -> std::result::Result<Response, reqwest::Error> {
+pub async fn make_request(word: String) -> Result<Response, reqwest::Error> {
     let res = reqwest::get(format!("https://api.dictionaryapi.dev/api/v2/entries/en/{word}")).await?;
     Ok(res)
 }

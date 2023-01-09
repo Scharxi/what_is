@@ -7,7 +7,7 @@ impl CLI {
         let args = std::env::args().skip(1).collect::<Vec<String>>();
 
         if args.len() == 1 {
-            eprintln!("{}: Incorecct syntax of command '{}'\n\t{}", "SYNTAX ERROR".fg::<Red>().bold(), "whatis".green(), "Usage: whatis <word>".green().bold());
+            eprintln!("{}: Incorrect syntax of command '{}'\n\t{}", "SYNTAX ERROR".fg::<Red>().bold(), "whatis".green(), "Usage: whatis <word>".green().bold());
             std::process::exit(1);
         }
 
@@ -16,7 +16,7 @@ impl CLI {
         if args[0] == "whatis" {
             word.push_str(args[1..].to_vec().join(" ").trim()); 
         } else {
-            eprintln!("{}: Incorecct syntax of command '{}'\n\t{}", "SYNTAX ERROR".fg::<Red>().bold(), "whatis".green(), "Usage: whatis <word>".green().bold());
+            eprintln!("{}: Incorrect syntax of command '{}'\n\t{}", "SYNTAX ERROR".fg::<Red>().bold(), "whatis".green(), "Usage: whatis <word>".green().bold());
             std::process::exit(1);
         }
 

@@ -27,6 +27,6 @@ async fn test_make_request() {
 #[tokio::test]
 async fn test_turn_response_to_word_def() {
     let res = make_request("hello".to_owned()).await;
-    let words = res.unwrap().to_word_defenition().await; 
+    let words = res.unwrap().to_word_definition().await;
     assert_eq!(words.unwrap().first().unwrap().get_word(), "hello".to_owned())
 }

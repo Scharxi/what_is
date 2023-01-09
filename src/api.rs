@@ -8,13 +8,13 @@ pub async fn make_request(word: String) -> std::result::Result<Response, reqwest
 
 #[async_trait::async_trait]
 pub trait WordLookUp {
-    async fn to_word_defenition(self) ->  Result<Vec<WordDefenition>, reqwest::Error>;
+    async fn to_word_definition(self) ->  Result<Vec<WordDefinition>, reqwest::Error>;
 }
 
 #[async_trait::async_trait]
 impl WordLookUp for Response {
-    async fn to_word_defenition(self) -> Result<Vec<WordDefenition>, reqwest::Error>{
-        self.json::<Vec<WordDefenition>>().await
+    async fn to_word_definition(self) -> Result<Vec<WordDefinition>, reqwest::Error>{
+        self.json::<Vec<WordDefinition>>().await
     }
 }
 
@@ -53,12 +53,12 @@ impl Meaning {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Phonectic {
+pub struct Phonetic {
     text: Option<String>, 
     audio: Option<String>
 }
 
-impl Phonectic {
+impl Phonetic {
     pub fn get_text(&self) -> Option<String> {
         self.text.clone()
     }
@@ -70,18 +70,18 @@ impl Phonectic {
 
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct WordDefenition {
+pub struct WordDefinition {
     word: String, 
     #[serde(skip_serializing)]
     phonetic: Option<String>, 
     #[serde(skip_serializing)]
-    phonetics: Vec<Phonectic>,
+    phonetics: Vec<Phonetic>,
     #[serde(skip_serializing)] 
     origin: Option<String>, 
     meanings: Vec<Meaning>
 }
 
-impl WordDefenition {
+impl WordDefinition {
     pub fn get_word(&self) -> String {
         self.word.clone().clone()
     }

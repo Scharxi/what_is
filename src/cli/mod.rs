@@ -17,7 +17,7 @@ pub async fn handle(query: String) {
             }
 
             // convert response to obejct
-            let word = res.to_word_defenition().await;
+            let word = res.to_word_definition().await;
 
             if word.is_err() {
                 eprintln!("{}: Something went wrong while parsing response to object. \n\t {:?}", "ERROR".fg::<Red>().bold(), word.err().unwrap());

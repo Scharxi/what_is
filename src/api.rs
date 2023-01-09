@@ -1,19 +1,19 @@
-use reqwest::Response;
+use reqwest::{Response, Result};
 use serde::Deserialize;
 
-pub async fn make_request(word: String) -> Result<Response, reqwest::Error> {
+pub async fn make_request(word: String) -> Result<Response> {
     let res = reqwest::get(format!("https://api.dictionaryapi.dev/api/v2/entries/en/{word}")).await?;
     Ok(res)
 }
 
 #[async_trait::async_trait]
 pub trait WordLookUp {
-    async fn to_word_definition(self) ->  Result<Vec<WordDefinition>, reqwest::Error>;
+    async fn to_word_definition(self) ->  Result<Vec<WordDefinition>>;
 }
 
 #[async_trait::async_trait]
 impl WordLookUp for Response {
-    async fn to_word_definition(self) -> Result<Vec<WordDefinition>, reqwest::Error>{
+    async fn to_word_definition(self) -> Result<Vec<WordDefinition>>{
         self.json::<Vec<WordDefinition>>().await
     }
 }
